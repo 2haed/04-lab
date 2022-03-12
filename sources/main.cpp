@@ -3,14 +3,14 @@
 //
 
 #include <iostream>
-
-char* operator=()(const char*){
-
-}
+#include <string>
+#include <include.hpp>
+#include <utils.h>
 
 int main() {
-  char** values = new char*[4];
-  values[0] = "halo";
-  std::cout << "Hallo!";
+  std::string str{"A string to split"};
+
+  split(str.c_str(), ' ');
+
   return 0;
 }

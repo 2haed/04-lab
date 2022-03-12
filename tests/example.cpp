@@ -3,224 +3,217 @@
 
 TEST(Task1, Middle) {
   // базовый сценарий
-  int* v1 = new int[7]{11, 2, 36, 47, 5, 53, 56};
-  auto result = mean(v1, 7);
+  std::vector<int> v = {11, 2, 36, 47, 5, 53, 56};
+  auto result = mean(v.data(), v.size());
   EXPECT_NEAR(result, 30, std::numeric_limits<double>::epsilon());
-  delete[] v1;
   // отрицательные коэффициенты
-  int* v2 = new int[7]{-11, -2, -36, -47, -5, -53, -56};
-  result = mean(v2, 7);
-  EXPECT_NEAR(result, -30, std::numeric_limits<float>::epsilon());
-  delete[] v2;
+  v = {-11, -2, -36, -47, -5, -53, -56};
+  result = mean(v.data(), v.size());
+  EXPECT_NEAR(result, -30, std::numeric_limits<double>::epsilon());
   // положительные и отрицательные коэффициенты
-  int* v3 = new int[7]{5, -3, -5, 47, -40, 3, 0};
-  result = mean(v3, 7);
-  EXPECT_NEAR(result, 1, std::numeric_limits<float>::epsilon());
-  delete[] v3;
+  v = {5, -3, -5, 47, -40, 3, 0};
+  result = mean(v.data(), v.size());
+  EXPECT_NEAR(result, 1, std::numeric_limits<double>::epsilon());
   // вектор из одного элемента
-  int* v4 = new int[1]{456};
-  result = mean(v4, 1);
-  EXPECT_NEAR(result, 456, std::numeric_limits<float>::epsilon());
-  delete[] v4;
+  v = {456};
+  result = mean(v.data(), v.size());
+  EXPECT_NEAR(result, 456, std::numeric_limits<double>::epsilon());
+  v = {};
+  result = mean(v.data(), v.size());
+  EXPECT_EQ(result, 0);
 }
 
 TEST(Task2, MinimunAndMaximum) {
   std::vector<int> v = {1, 2, 3, 4, 5, 0};
   auto pair = min_max(v.data(), v.size());
-  EXPECT_NEAR(pair.min, 0, std::numeric_limits<float>::epsilon());
-  EXPECT_NEAR(pair.max, 5, std::numeric_limits<float>::epsilon());
+  EXPECT_NEAR(pair.min, 0, std::numeric_limits<double>::epsilon());
+  EXPECT_NEAR(pair.max, 5, std::numeric_limits<double>::epsilon());
 
-  v = {-1, -2, -3, -4, -5, 0}
+  v = {-1, -2, -3, -4, -5, 0};
   pair = min_max(v.data(), v.size());
-  EXPECT_NEAR(pair.min, -5, std::numeric_limits<float>::epsilon());
-  EXPECT_NEAR(pair.max, 0, std::numeric_limits<float>::epsilon());
+  EXPECT_NEAR(pair.min, -5, std::numeric_limits<double>::epsilon());
+  EXPECT_NEAR(pair.max, 0, std::numeric_limits<double>::epsilon());
   // массив из одинаковых элементов
   v = {1, 1, 1, 1, 1, 1};
   pair = min_max(v.data(), v.size());
-  EXPECT_NEAR(pair.min, 1, std::numeric_limits<float>::epsilon());
-  EXPECT_NEAR(pair.max, 1, std::numeric_limits<float>::epsilon());
+  EXPECT_NEAR(pair.min, 1, std::numeric_limits<double>::epsilon());
+  EXPECT_NEAR(pair.max, 1, std::numeric_limits<double>::epsilon());
 
   // массив из одного элемента
   v = {15};
   pair = min_max(v.data(), v.size());
-  EXPECT_NEAR(pair.min, 15, std::numeric_limits<float>::epsilon());
-  EXPECT_NEAR(pair.max, 15, std::numeric_limits<float>::epsilon());
+  EXPECT_NEAR(pair.min, 15, std::numeric_limits<double>::epsilon());
+  EXPECT_NEAR(pair.max, 15, std::numeric_limits<double>::epsilon());
 
   // пустой массив
   v = {};
   pair = min_max(v.data(), v.size());
-  EXPECT_NEAR(pair.min, std::numeric_limits<float>::min(), std::numeric_limits<float>::epsilon());
-  EXPECT_NEAR(pair.max, std::numeric_limits<float>::max(), std::numeric_limits<float>::epsilon());
+  EXPECT_NEAR(pair.min, std::numeric_limits<double>::min(), std::numeric_limits<double>::epsilon());
+  EXPECT_NEAR(pair.max, std::numeric_limits<double>::max(), std::numeric_limits<double>::epsilon());
 }
 
 TEST(Task3, Argmax) {
-  // базовый сценарий
-  std::vector<int> v1 = {11, 2, 36, 47, 5, 53, 56};
-  auto index = argmax(v1.data(), v1.size());
+  std::vector<int> v = {11, 2, 36, 47, 5, 53, 56};
+  auto index = argmax(v.data(), v.size());
   EXPECT_EQ(index.min, 1);
   EXPECT_EQ(index.max, 6);
   // отрицательные коэффициенты
-  int* v2 = new int[7]{-11, -2, -36, -47, -5, -53, -56};
-  index_max = argmax(v2, 7);
-  EXPECT_EQ(index_max, 1);
-  delete[] v2;
+  v = {-11, -2, -36, -47, -5, -53, -56};
+  index = argmax(v.data(), v.size());
+  EXPECT_EQ(index.max, 1);
+  EXPECT_EQ(index.min, 6);
   // положительные и отрицательные коэффициенты
-  int* v3 = new int[7]{5, -3, -5, 47, -40, 3, 0};
-  index_max = argmax(v3, 7);
-  EXPECT_EQ(index_max, 3);
-  delete[] v3;
+  v = {5, -3, -5, 47, -40, 3, 0};
+  index = argmax(v.data(), v.size());
+  EXPECT_EQ(index, 3);
   // массив из одинаковых элементов
-  int* v5 = new int[7]{5, 5, 5, 5, 5, 5, 5};
-  index_max = argmax(v5, 7);
-  EXPECT_EQ(index_max, 0);
-  delete[] v5;
+  v = {5, 5, 5, 5, 5, 5, 5};
+  index = argmax(v.data(), v.size());
+  EXPECT_EQ(index, 0);
   // вектор из одного элемента
-  int* v4 = new int[1]{456};
-  index_max = argmax(v4, 1);
-  EXPECT_EQ(index_max, 0);
-  delete[] v4;
+  v = {456};
+  index = argmax(v.data(), v.size());
+  EXPECT_EQ(index, 0);
   // пустой вектор
-  int* v6 = new int[0]{};
-  index_max = argmax(v6, 0);
-  EXPECT_EQ(index_max, -1);
-  delete[] v6;
+  v = {};
+  index = argmax(v.data(), v.size());
+  EXPECT_EQ(index, -1);
 }
 
 TEST(Task4, Sort) {
   // базовый сценарий
-  std::vector<float> v1 = {11, 2, 36, 47, 5, 53, 56};
-  std::vector<float> res_v1 = {2, 5, 11, 36, 47, 53, 56};
-  sort(v1);
-  EXPECT_EQ(v1, res_v1);
+  std::vector<int> v = {11, 2, 36, 47, 5, 53, 56};
+  std::vector<int> res_v = {2, 5, 11, 36, 47, 53, 56};
+  sort(v.data(), v.size());
+  EXPECT_EQ(v, res_v);
   // отрицательные коэфиициенты
-  std::vector<float> v2 = {-11, -2, -36, -47, -5, -53, -56};
-  std::vector<float> res_v2 = {-56, -53, -47, -36, -11, -5, -2};
-  sort(v2);
-  EXPECT_EQ(v2, res_v2);
+  v = {-11, -2, -36, -47, -5, -53, -56};
+  res_v = {-56, -53, -47, -36, -11, -5, -2};
+  sort(v.data(), v.size());
+  EXPECT_EQ(v, res_v);
   // положительные и отрицательные коэфиициенты
-  std::vector<float> v3 = {5, -3, -5, 47, -40, 3, 0};
-  std::vector<float> res_v3 = {-40, -5, -3, 0, 3, 5, 47};
-  sort(v3);
-  EXPECT_EQ(v3, res_v3);
+  v = {5, -3, -5, 47, -40, 3, 0};
+  res_v = {-40, -5, -3, 0, 3, 5, 47};
+  sort(v.data(), v.size());
+  EXPECT_EQ(v, res_v);
   // вектор из одного элемента
-  std::vector<float> v4 = {456};
-  std::vector<float> res_v4 = {456};
-  sort(v4);
-  EXPECT_EQ(v4, res_v4);
+  v = {456};
+  res_v = {456};
+  sort(v.data(), v.size());
+  EXPECT_EQ(v, res_v);
   // пустой вектор
-  std::vector<float> v5 = {};
-  std::vector<float> res_v5 = {};
-  sort(v5);
-  EXPECT_EQ(v5, res_v5);
+  v = {};
+  res_v = {};
+  sort(v.data(), v.size());
+  EXPECT_EQ(v, res_v);
 }
 
 TEST(Task5, RemoveFirstNegativeElement) {
   // базовый сценарий
   int removed_element = 0;
-  int size = 7;
-  int* v1;
-  v1 = new int[size]{11, -2, 36, -47, 5, 53, 56};
-  int* result1 = new int[6]{11, 36, -47, 5, 53, 56};
-  bool test = remove_first_negative_element(v1, size, removed_element);
-  PRINT_ARRAY(v1,size);
-  EXPECT_TRUE(compare_arrays(v1, result1, size, 6));
+  std::vector<int> v = {11, -2, 36, -47, 5, 53, 56};
+  const int* data = v.data();
+  std::vector<int> result = {11, 36, -47, 5, 53, 56};
+  bool test = remove_first_negative_element(&data, v.size(), removed_element);
+  EXPECT_EQ(v, result);
   EXPECT_EQ(test, true);
   EXPECT_EQ(removed_element, -2);
   // только неотрицательные элементы
-  size = 7;
-  int* v2 = new int[size]{11, 2, 0, 47, 5, 53, 56};
-  int* result2 = new int[7]{11, 2, 0, 47, 5, 53, 56};
-  test = remove_first_negative_element(v2, size, removed_element);
-  EXPECT_TRUE(compare_arrays(v2, result2, size, 7));
+  v = {11, 2, 0, 47, 5, 53, 56};
+  data = v.data();
+  result = {11, 2, 0, 47, 5, 53, 56};
+  test = remove_first_negative_element(&data, v.size(), removed_element);
+  EXPECT_EQ(v, result);
   EXPECT_EQ(test, false);
   EXPECT_EQ(removed_element, 0);
   // один отрицательный элемент
-  size = 1;
-  int* v3 = new int[1]{-111};
-  int* result3 = new int[0]{};
-  test = remove_first_negative_element(v3, size, removed_element);
-  EXPECT_TRUE(compare_arrays(v3, result3, size, 0));
+  v = {-111};
+  data = v.data();
+  result = {};
+  test = remove_first_negative_element(&data, v.size(), removed_element);
+  EXPECT_EQ(v, result);
   EXPECT_EQ(test, true);
   EXPECT_EQ(removed_element, -111);
   // пустой массив
-  size = 0;
-  int* v4 = new int[size]{};
-  int* result4 = new int[0]{};
-  test = remove_first_negative_element(v4, size, removed_element);
-  EXPECT_TRUE(compare_arrays(v4, result4, size, 0));
+  v = {};
+  data = v.data();
+  result = {};
+  test = remove_first_negative_element(&data, v.size(), removed_element);
+  EXPECT_EQ(v, result);
   EXPECT_EQ(test, false);
   EXPECT_EQ(removed_element, 0);
 }
 
 TEST(Task6, Replace) {
-  std::string newString1 = replace("Can you can a can as a canner can can a can?", "can", "cAN");
-  std::string result1 = "Can you cAN a cAN as a cANner cAN cAN a cAN?";
-  EXPECT_EQ(result1, newString1);
+  std::string str = replace("Can you can a can as a canner can can a can?", "can", "cAN");
+  std::string result = "Can you cAN a cAN as a cANner cAN cAN a cAN?";
+  EXPECT_EQ(result, str);
 
-  std::string newString2 = replace("can cancan cancancan cancancancan", "c", "C");
-  std::string result2 = "Can CanCan CanCanCan CanCanCanCan";
-  EXPECT_EQ(result2, newString2);
+  str = replace("can cancan cancancan cancancancan", "c", "C");
+  result = "Can CanCan CanCanCan CanCanCanCan";
+  EXPECT_EQ(result, str);
 
-  std::string newString3 = replace("     ", " ", "T");
-  std::string result3 = "TTTTT";
-  EXPECT_EQ(result3, newString3);
+  str = replace("     ", " ", "T");
+  result = "TTTTT";
+  EXPECT_EQ(result, str);
 
-  std::string newString4 = replace("", "can", "cAN");
-  std::string result4 = "";
-  EXPECT_EQ(result4, newString4);
+  str = replace("", "can", "cAN");
+  result = "";
+  EXPECT_EQ(result, str);
 }
 
 TEST(Task7, Split) {
   // базовый случай
-  std::string str1 = "Hello! Do you like programming?";
-  std::vector<std::string> result1 = {"Hello!", "Do", "you", "like", "programming?"};
-  std::vector<std::string> v1 = split(str1, ' ');
-  EXPECT_EQ(result1, v1);
+  std::string str = "Hello! Do you like programming?";
+  std::vector<const char*> result = {"Hello!", "Do", "you", "like", "programming?"};
+  string_array v{};
+  auto data = split(str.c_str(), ' ');
+  EXPECT_EQ(result, v);
   // строка не содержит пробелов
-  std::string str2 = "Hello!";
-  std::vector<std::string> result2 = {"Hello!"};
-  std::vector<std::string> v2 = split(str2, ' ');
-  EXPECT_EQ(result2, v2);
+  str = "Hello!";
+  result = {"Hello!"};
+  v = split(str.c_str(), ' ');
+  EXPECT_EQ(result, v);
   // строка пустая
-  std::string str3 = "";
-  std::vector<std::string> result3 = {};
-  std::vector<std::string> v3 = split(str3, ' ');
-  EXPECT_EQ(result3, v3);
+  str = "";
+  result = {};
+  v = split(str.c_str(), ' ');
+  EXPECT_EQ(result, v);
   // строка состоит только из пробельного символа
-  std::string str4 = " ";
-  std::vector<std::string> result4 = {};
-  std::vector<std::string> v4 = split(str4, ' ');
-  EXPECT_EQ(result4, v4);
+  str = " ";
+  result = {};
+  v = split(str.c_str(), ' ');
+  EXPECT_EQ(result, v);
   // строка не пустая, но не содержит разделительного символа
-  std::string str5 = "Hello! Do you like programming?";
-  std::vector<std::string> result5 = {"Hello! Do you like programming?"};
-  std::vector<std::string> v5 = split(str5, '.');
-  EXPECT_EQ(result5, v5);
+  str = "Hello! Do you like programming?";
+  result = {"Hello! Do you like programming?"};
+  v = split(str.c_str(), '.');
+  EXPECT_EQ(result, v);
   // в роли разделителя не пробел
-  std::string str6 = "Hello!.Do.you.like.programming?";
-  std::vector<std::string> result6 = {"Hello!", "Do", "you", "like", "programming?"};
-  std::vector<std::string> v6 = split(str6, '.');
-  EXPECT_EQ(result6, v6);
+  str = "Hello!.Do.you.like.programming?";
+  result = {"Hello!", "Do", "you", "like", "programming?"};
+  v = split(str.c_str(), '.');
+  EXPECT_EQ(result, v);
 }
 
 TEST(Task8, Join) {
-  std::vector<std::string> arr1 = {"Can", "you", "can", "a", "can", "as",  "a", "canner", "can", "can", "a", "can?"};
-  std::string str1 = join(arr1, " ");
-  std::string result1 = "Can you can a can as a canner can can a can?";
-  EXPECT_EQ(result1, str1);
+  std::vector<const char*> arr = {"Can", "you", "can", "a", "can", "as",  "a", "canner", "can", "can", "a", "can?"};
+  std::string str = join(string_array{arr.data(), arr.size()}, " ");
+  std::string result = "Can you can a can as a canner can can a can?";
+  EXPECT_EQ(result, str);
 
-  std::vector<std::string> arr2 = {"Hello!", "Do", "you", "like", "programming?"};
-  std::string str2 = join(arr2, " ");
-  std::string result2 = "Hello! Do you like programming?";
-  EXPECT_EQ(result2, str2);
+  arr = {"Hello!", "Do", "you", "like", "programming?"};
+  str = join(string_array{arr.data(), arr.size()}, " ");
+  result = "Hello! Do you like programming?";
+  EXPECT_EQ(result, str);
 
-  std::vector<std::string> arr3 = {""};
-  std::string str3 = join(arr3, " ");
-  std::string result3 = "";
-  EXPECT_EQ(result3, str3);
+  arr = {""};
+  str = join(string_array{arr.data(), arr.size()}, " ");
+  result = "";
+  EXPECT_EQ(result, str);
 
-  std::vector<std::string> arr4 = {"Can", "you", "can", "a", "can", "as",  "a", "canner", "can", "can", "a", "can?"};
-  std::string str4 = join(arr4, "...");
-  std::string result4 = "Can...you...can...a...can...as...a...canner...can...can...a...can?";
-  EXPECT_EQ(result4, str4);
+  arr = {"Can", "you", "can", "a", "can", "as",  "a", "canner", "can", "can", "a", "can?"};
+  str = join(string_array{arr.data(), arr.size()}, "...");
+  result = "Can...you...can...a...can...as...a...canner...can...can...a...can?";
+  EXPECT_EQ(result, str);
 }

@@ -26,6 +26,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/sources/lab>"
   "$<INSTALL_INTERFACE:/sources/lab>"
 )
+target_include_directories(${PROJECT_NAME} PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/sources/utils>"
+  "$<INSTALL_INTERFACE:/sources/utils>"
+)
 
 target_link_libraries(${PROJECT_NAME}_ex ${PROJECT_NAME})
 

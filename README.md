@@ -55,8 +55,8 @@ struct int_pair {
     int min, max;
 };
 
-struct float_pair {
-    float min, max;
+struct double_pair {
+    double min, max;
 };
 ```
 
@@ -67,7 +67,7 @@ int_pair min_max_args(const int* array, int size);
 4. Необходимо реализовать функцию, которая определяет максимум и минимум в массиве.
    Прототип функции:
 ```cpp
-float_pair min_max(const int* array, int size);
+double_pair min_max(const int* array, int size);
 ```
 Если массив пуст, функция должна вернуть `min` и `max` из `std::numeric_limits`.
 Об этом можно почитать [тут](https://en.cppreference.com/w/cpp/types/numeric_limits).
@@ -87,7 +87,12 @@ bool remove_first_negative_element(const int** vec, int size, int& removed_eleme
 Функция возвращает `true` если удалось удалить элемент, а `false` если не удалось.
 Значение удаленного элемента помещать в `removed_element`, если удаление не произошло то инициализировать `removed_element` нулем.
 
-5. Необходимо реализовать функцию, которая заменяет в строке все вхождения подстроки на новую строку.
+5. Необходимо реализовать функцию, которая подсчитывает длину C-style строки. Такие строки обычно являются `char*` и заканчиваются терминирующим нулём `\0`
+```c++
+size_t strlen(const char* str);
+```
+
+6. Необходимо реализовать функцию, которая заменяет в строке все вхождения подстроки на новую строку.
    Можно пользоваться функцией `std::string::find`, о которой можно почитать [тут](https://ru.cppreference.com/w/cpp/string/basic_string/find).
 ```cpp
 char* replace(const char* str, const char* old, const char* new_string);
@@ -98,24 +103,35 @@ char* newString = replace("Can you can a can as a canner can can a can?", "can",
 std::cout << newString; // "Can you cAN a cAN as a cANner cAN cAN a cAN?"
 ```
 
+### Примечание перед следующими задачами:
+Для удобства можете реализовать структуру `string_array` в файле [utils.h](sources/utils/utils.h)
+*(И вообще, почаще их используйте)*
+```c++
+struct string_array {
+    char** str;
+    size_t size;
+};
+```
+
 6. Необходимо реализовать функцию `split`, которая делит строку по заданному символу.
 ```cpp
-char** split(const char*, char sep);
+string_array split(const char*, char sep);
 ```
 Пример:
 ```cpp
-char** arr = split("Can you can a can as a canner can can a can?", ' ');
-// arr == {"Can", "you", "can", "a", "can", "as", "a", "canner", "can", "can", "a", "can?"};
+string_array arr = split("Can you can a can as a canner can can a can?", ' ');
+// arr.str == {"Can", "you", "can", "a", "can", "as", "a", "canner", "can", "can", "a", "can?"};
+// arr.size == 12
 ```
 Если строка состоит только из символов, которые указаны вторым аргументом, функция должна вернуть пустой вектор.
 
 7. Необходимо реализовать функцию, которая соединяет массив строк в одну строку.
 ```cpp
-char* join(const char**, const char* sep);
+char* join(const string_array& arr, const char* sep);
 ```
 Пример:
 ```cpp
-char** arr = {"Can", "you", "can", "a", "can", "as", "a", "canner", "can", "can", "a", "can?"};
-std::string str = join(arr, " ");
+// arr == {"Can", "you", "can", "a", "can", "as", "a", "canner", "can", "can", "a", "can?"};
+std::string str = join({arr, 12}, " ");
 // str == "Can you can a can as a canner can can a can?"
 ```
