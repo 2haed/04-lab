@@ -4,7 +4,13 @@
 
 #include <iostream>
 
+char* operator=()(const char*){
+
+}
+
 int main() {
+  char** values = new char*[4];
+  values[0] = "halo";
   std::cout << "Hallo!";
   return 0;
 }
